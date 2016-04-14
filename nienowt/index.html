@@ -28,11 +28,11 @@
             <p>Secondary Power: <input type="text" data-ng-model="ghostctrl.changedGhost.powers.secondary" value=""/></p>
             <p>Weakness: <input type="text" data-ng-model="ghostctrl.changedGhost.powers.weakness" value=""/></p>
 
-            <button id="ghostEditSubmit" data-ng-click="ghostctrl.confirmChange(ghostctrl.changedGhost, 'edit', ghost)">Submit</button>
+            <button id="ghostEditSubmit" data-ng-click="ghostctrl.editGhost(ghost)">Submit</button>
             <p data-ng-show="ghostctrl.editConfirmation">Are you sure you want to do that? Changes cannot be undone once submitted</p>
 
             <button form="editForm" data-ng-click="ghostctrl.reset(ghost)" data-ng-show="ghostctrl.editConfirmation">Cancel Edit</button>
-            <button data-ng-click="ghostctrl.confirmChange(ghost,'delete')">Delete Ghost</button>
+            <button data-ng-click="ghostctrl.removeGhost(ghost)">Delete Ghost</button>
           </form>
 
         </section>
@@ -60,11 +60,11 @@
               Name: <input type="text" data-ng-model="humanctrl.changedHuman.name" value=""/>
               <p>Number of Teeth: <input type="text" data-ng-model="humanctrl.changedHuman.numTeeth" value=""/></p>
 
-              <button id="humanEditSubmit" data-ng-click="humanctrl.confirmChange(humanctrl.changedHuman, 'edit', human)">Submit</button>
+              <button id="humanEditSubmit" data-ng-click="humanctrl.editHuman(human)">Submit</button>
               <p data-ng-show="humanctrl.editConfirmation">Are you sure you want to do that? Changes cannot be undone once submitted</p>
 
               <button data-ng-click="humanctrl.reset(human)" data-ng-show="humanctrl.editConfirmation">Cancel Edit</button>
-              <button data-ng-click="humanctrl.confirmChange(human,'delete')">Delete Human</button>
+              <button data-ng-click="humanctrl.removeHuman(human)">Delete Human</button>
             </form>
 
         </section>

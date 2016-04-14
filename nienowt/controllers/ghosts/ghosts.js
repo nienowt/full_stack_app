@@ -13,13 +13,6 @@
       this.editShow = name;
     };
 
-    this.confirmChange = function(ghost, buttonName, oldGhost){
-      if (!this.editConfirmation) return this.editConfirmation = true;
-
-      if(buttonName === 'delete') return this.removeGhost(ghost);
-      if(buttonName === 'edit') return this.editGhost(ghost, oldGhost);
-    };
-
     this.getGhosts = function() {
       $http.get(mainRoute)
       .then((results) => {
@@ -39,27 +32,29 @@
       });
     };
 
-    this.editGhost = function(changedGhost, ghost){
-      $http.put(mainRoute + '/' + ghost._id, changedGhost)
+    this.editGhost = function(ghost){
+      if (!this.editConfirmation) return this.editConfirmation = true;
+      $http.put(mainRoute + '/' + ghost._id, this.changedGhost)
       .then(() => {
         this.ghosts = this.ghosts.filter((g) => g._id != ghost._id);
-        console.log(changedGhost)
-        this.ghosts.push(changedGhost.ghost);
-        console.log(this.ghosts)
+        this.ghosts.push(this.changedGhost.ghost);
+        this.editShow = 'new';
       });
     };
 
     this.removeGhost = function(ghost){
+      if (!this.editConfirmation) return this.editConfirmation = true;
       $http.delete(mainRoute + '/' + ghost._id)
       .then(() => {
         this.ghosts = this.ghosts.filter((g) => g._id != ghost._id);
+        this.editShow = 'new';
       });
     };
               // doesnt work?
     this.reset = function(){
       this.editShow = 'new';
-      this.editconfirmation = !this.editconfirmation;
       this.changedGhost = {};
+      return this.editConfirmation = false;
     };
   }])
 })()
