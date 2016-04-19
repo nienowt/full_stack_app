@@ -3,13 +3,17 @@
 var gulp = require('gulp');
 var eslint = require('gulp-eslint');
 var mocha = require('gulp-mocha');
-var webpack = require('gulp-webpack');
+var webpack = require('webpack-stream');
 var paths = ['*.js', 'test/*.js', 'routes/*.js', 'models/*.js', 'controllers/*', '*.html','css/*'];
+var sources = {
+  js: __dirname + '/controllers/**',
+  test: './test/*_spec.js'
+}
 
 gulp.task('default', ['watch']);
 
 gulp.task('watch', function() {
-  gulp.watch(paths,['webpack', 'build', 'buildcss']);
+  gulp.watch(paths,['build', 'buildcss','webpack']);
 });
 
 gulp.task('lint', function(){
@@ -71,8 +75,19 @@ gulp.task('buildcss', function(){
   .pipe(gulp.dest('./build/css'));
 });
 
+
+// gulp.task('buildmodules', function(){
+//   return gulp.src(['node_modules/angular/angular.js'])
+//   .pipe(gulp.dest('./build/node_modules/angular'));
+// });
+gulp.task('bundle:test', () => {
+  return gulp.src(sources.test)
+  .pipe(webpack({output: {filename: 'test_bundle.js'}}))
+  .pipe(gulp.dest('./test'));
+})
+
 gulp.task('webpack', function() {
-  return gulp.src('./entry.js')
+  return gulp.src(['node_modules/angular/angular.js', sources.js])
   .pipe(webpack({
     output: {
       filename: 'bundle.js'

@@ -9,14 +9,18 @@
     <header>
       <nav>
         <a href="" data-ng-click="tabctrl.setTab('ghosts')">Ghosts</a>
-        <a href="" data-ng-click="tabctrl.setTab('humans')">Humans</a>
+        <a href="" id="humanTab" data-ng-click="tabctrl.setTab('humans')">Humans</a>
       </nav>
     </header>
     <section data-ng-init="ghostctrl.getGhosts()" data-ng-controller='GhostController as ghostctrl' data-ng-show="tabctrl.active('ghosts')">
-      <ul>
-        <li data-ng-repeat="ghost in ghostctrl.ghosts">
-          <p>{{ghost}}
-          <button data-ng-click="ghostctrl.toggle(ghost.name)">Edit</button></p>
+      <!-- <ul id="ghostList"> -->
+        <section data-ng-repeat="ghost in ghostctrl.ghosts">
+          <p>Name: {{ghost.name}}</p>
+          <p>Powers:</p>
+          <p>Primary: {{ghost.powers[0].primary}}</p>
+          <p>Secondary: {{ghost.powers[0].secondary}}</p>
+          <p>Weakness: {{ghost.powers[0].weakness}}</p>
+          <button id="ghostEdit" data-ng-click="ghostctrl.toggle(ghost.name)">Edit</button>
 
           <form name="editForm" ng-show="ghostctrl.editShow == ghost.name">
             Name: <input type="text" data-ng-model="ghostctrl.changedGhost.ghost.name" value=""/>
@@ -24,54 +28,63 @@
             <p>Secondary Power: <input type="text" data-ng-model="ghostctrl.changedGhost.powers.secondary" value=""/></p>
             <p>Weakness: <input type="text" data-ng-model="ghostctrl.changedGhost.powers.weakness" value=""/></p>
 
-            <button data-ng-click="ghostctrl.confirmChange(ghostctrl.changedGhost, 'edit', ghost)">Submit</button>
+            <button id="ghostEditSubmit" data-ng-click="ghostctrl.editGhost(ghost)">Submit</button>
             <p data-ng-show="ghostctrl.editConfirmation">Are you sure you want to do that? Changes cannot be undone once submitted</p>
 
             <button form="editForm" data-ng-click="ghostctrl.reset(ghost)" data-ng-show="ghostctrl.editConfirmation">Cancel Edit</button>
-            <button data-ng-click="ghostctrl.confirmChange(ghost,'delete')">Delete Ghost</button>
+            <button data-ng-click="ghostctrl.removeGhost(ghost)">Delete Ghost</button>
           </form>
 
-        </li>
-      </ul>
+        </section>
+      <!-- </ul> -->
 
       <form name="newForm" data-ng-submit="ghostctrl.createGhost(ghostctrl.newGhost)" ng-show="ghostctrl.editShow == 'new'">
         Name: <input type="text" data-ng-model="ghostctrl.newGhost.name" value=""/>
         <p>Primary Power: <input type="text" data-ng-model="ghostctrl.newGhost.powers.primary" value=""/></p>
         <p>Secondary Power: <input type="text" data-ng-model="ghostctrl.newGhost.powers.secondary" value=""/></p>
         <p>Weakness: <input type="text" data-ng-model="ghostctrl.newGhost.powers.weakness" value=""/></p>
-        <button type="submit">Submit</button>
+        <button id="ghost" type="submit">Submit</button>
       </form>
 
     </section>
 
       <!-- *****humans***** -->
     <section data-ng-init="humanctrl.getHumans()" data-ng-controller='HumanController as humanctrl' data-ng-show="tabctrl.active('humans')">
-      <ul>
-        <li data-ng-repeat="human in humanctrl.humans">
-          <p>{{human}}
-            <button data-ng-click="humanctrl.toggle(human.name)">Edit</button></p>
+      <!-- <ul> -->
+        <section data-ng-repeat="human in humanctrl.humans">
+          <p>Name: {{human.name}}</p>
+          <p>Number of Teeth: {{human.numTeeth}}</p>
+            <button id="humanEdit" data-ng-click="humanctrl.toggle(human.name)">Edit</button>
 
             <form name="editForm" ng-show="humanctrl.editShow == human.name">
               Name: <input type="text" data-ng-model="humanctrl.changedHuman.name" value=""/>
               <p>Number of Teeth: <input type="text" data-ng-model="humanctrl.changedHuman.numTeeth" value=""/></p>
 
-              <button data-ng-click="humanctrl.confirmChange(humanctrl.changedHuman, 'edit', human)">Submit</button>
+              <button id="humanEditSubmit" data-ng-click="humanctrl.editHuman(human)">Submit</button>
               <p data-ng-show="humanctrl.editConfirmation">Are you sure you want to do that? Changes cannot be undone once submitted</p>
 
               <button data-ng-click="humanctrl.reset(human)" data-ng-show="humanctrl.editConfirmation">Cancel Edit</button>
-              <button data-ng-click="humanctrl.confirmChange(human,'delete')">Delete Human</button>
+              <button data-ng-click="humanctrl.removeHuman(human)">Delete Human</button>
             </form>
 
-        </li>
-      </ul>
+        </section>
+      <!-- </ul> -->
 
       <form name="humanForm" data-ng-submit="humanctrl.createHuman(humanctrl.newHuman)" ng-show="humanctrl.editShow == 'new'">
         <p>New Human:</p>
         Name: <input type="text" data-ng-model="humanctrl.newHuman.name" value=""/>
         <p>Number of Teeth: <input type="text" data-ng-model="humanctrl.newHuman.numTeeth" value=""/></p>
-        <button type="submit">Submit</button>
+        <button id="human" type="submit">Submit</button>
       </form>
     </section>
     <script src="./bundle.js"></script>
+    <!-- <script src="./node_modules/angular/angular.js"></script>
+    <script src="./controllers/ghosts/ghost-module.js"></script>
+    <script src="./controllers/ghosts/ghosts.js"></script>
+    <script src="./controllers/humans/human-module.js"></script>
+    <script src="./controllers/humans/humans.js"></script>
+    <script src="./controllers/tabs/tab-module.js"></script>
+    <script src="./controllers/tabs/tabs.js"></script>
+    <script src="./controllers/app.js"></script> -->
   </body>
 </html>
