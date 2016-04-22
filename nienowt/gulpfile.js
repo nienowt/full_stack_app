@@ -4,16 +4,16 @@ var gulp = require('gulp');
 var eslint = require('gulp-eslint');
 var mocha = require('gulp-mocha');
 var webpack = require('webpack-stream');
-var paths = ['*.js', 'test/*.js', 'routes/*.js', 'models/*.js', 'controllers/*', '*.html','css/*'];
+var paths = ['app/**','*.js', 'routes/*.js', 'models/*.js', 'app/controllers/*', '*.html','css/*'];
 var sources = {
-  js: __dirname + '/controllers/**',
+  js: ['./app/**.js', './app/controllers/**'],
   test: './test/*_spec.js'
 }
 
 gulp.task('default', ['watch']);
 
 gulp.task('watch', function() {
-  gulp.watch(paths,['build', 'buildcss','webpack']);
+  gulp.watch(paths,['build','buildtemplates', 'buildcss','webpack']);
 });
 
 gulp.task('lint', function(){
@@ -75,6 +75,11 @@ gulp.task('buildcss', function(){
   .pipe(gulp.dest('./build/css'));
 });
 
+gulp.task('buildtemplates', function(){
+  return gulp.src(['app/templates/**'])
+  .pipe(gulp.dest('./build/templates'))
+})
+
 
 // gulp.task('buildmodules', function(){
 //   return gulp.src(['node_modules/angular/angular.js'])
@@ -87,7 +92,7 @@ gulp.task('bundle:test', () => {
 })
 
 gulp.task('webpack', function() {
-  return gulp.src(['node_modules/angular/angular.js', sources.js])
+  return gulp.src(['node_modules/angular/angular.js', './app/**.js', './app/controllers/**'])
   .pipe(webpack({
     output: {
       filename: 'bundle.js'

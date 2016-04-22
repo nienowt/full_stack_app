@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">gulp
+    <meta charset="utf-8">
     <link rel="stylesheet" type="text/css" href="./css/style.css">
     <title></title>
   </head>
@@ -12,8 +12,9 @@
         <a href="" id="humanTab" data-ng-click="tabctrl.setTab('humans')">Humans</a>
       </nav>
     </header>
-    <section data-ng-init="ghostctrl.getGhosts()" data-ng-controller='GhostController as ghostctrl' data-ng-show="tabctrl.active('ghosts')">
-      <!-- <ul id="ghostList"> -->
+    <ghosts></ghosts>
+    <!-- <section data-ng-init="ghostctrl.getGhosts()" data-ng-controller='GhostController as ghostctrl' data-ng-show="tabctrl.active('ghosts')">
+
         <section data-ng-repeat="ghost in ghostctrl.ghosts">
           <p>Name: {{ghost.name}}</p>
           <p>Powers:</p>
@@ -36,7 +37,7 @@
           </form>
 
         </section>
-      <!-- </ul> -->
+
 
       <form name="newForm" data-ng-submit="ghostctrl.createGhost(ghostctrl.newGhost)" ng-show="ghostctrl.editShow == 'new'">
         Name: <input type="text" data-ng-model="ghostctrl.newGhost.name" value=""/>
@@ -46,11 +47,11 @@
         <button id="ghost" type="submit">Submit</button>
       </form>
 
-    </section>
+    </section> -->
 
       <!-- *****humans***** -->
-    <section data-ng-init="humanctrl.getHumans()" data-ng-controller='HumanController as humanctrl' data-ng-show="tabctrl.active('humans')">
-      <!-- <ul> -->
+      <humans></humans>
+    <!-- <section data-ng-init="humanctrl.getHumans()" data-ng-controller='HumanController as humanctrl' data-ng-show="tabctrl.active('humans')">
         <section data-ng-repeat="human in humanctrl.humans">
           <p>Name: {{human.name}}</p>
           <p>Number of Teeth: {{human.numTeeth}}</p>
@@ -68,7 +69,6 @@
             </form>
 
         </section>
-      <!-- </ul> -->
 
       <form name="humanForm" data-ng-submit="humanctrl.createHuman(humanctrl.newHuman)" ng-show="humanctrl.editShow == 'new'">
         <p>New Human:</p>
@@ -76,7 +76,7 @@
         <p>Number of Teeth: <input type="text" data-ng-model="humanctrl.newHuman.numTeeth" value=""/></p>
         <button id="human" type="submit">Submit</button>
       </form>
-    </section>
+    </section> -->
     <script src="./bundle.js"></script>
     <!-- <script src="./node_modules/angular/angular.js"></script>
     <script src="./controllers/ghosts/ghost-module.js"></script>
