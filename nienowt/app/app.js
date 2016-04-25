@@ -6,18 +6,27 @@
     'tab'
   ])
   .directive('ghosts', function(){
-    console.log()
     return {
       templateUrl: './templates/ghost.html'
     }
   })
   .directive('humans', function(){
-    console.log()
     return {
       templateUrl: './templates/human.html'
     }
   })
-  .factory('Auth', ['$http', function($http){
+  .directive('resourceNav', function(){
+    return {
+      templateUrl: './templates/nav.html'
+    }
+  })
+  .directive('login', function(){
+    return {
+      templateUrl: './templates/login.html'
+    }
+  })
+  //I forgot that we were doing auth later this week so I tried to do it for this assignment, ignore this bit for now
+  .factory('Auth', ['$http','$window', function($http, $window){
     var token;
     var auth = {
       createGhost: function(ghost){
@@ -34,9 +43,14 @@
             'Authorization': 'Basic ' + btoa((ghost.name + ':' + ghost.password))
           }
         }).then(function(res) {
-          token = res.data.token;
+          token = $window.localStorage.token = res.data.token;
           console.log(token)
+          console.log('windo', $window.localStorage.token)
         })
+      },
+      getToken: function(){
+        console.log(token)
+        return token
       }
 
     }

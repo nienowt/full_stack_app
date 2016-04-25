@@ -4,7 +4,7 @@ var gulp = require('gulp');
 var eslint = require('gulp-eslint');
 var mocha = require('gulp-mocha');
 var webpack = require('webpack-stream');
-var paths = ['app/**','*.js', 'routes/*.js', 'models/*.js', 'app/controllers/*', '*.html','css/*'];
+var paths = ['app/**','*.js', 'routes/*.js','lib/**', 'models/*.js', 'app/controllers/*', '*.html','css/*'];
 var sources = {
   js: ['./app/**.js', './app/controllers/**'],
   test: './test/*_spec.js'
@@ -92,7 +92,7 @@ gulp.task('bundle:test', () => {
 })
 
 gulp.task('webpack', function() {
-  return gulp.src(['node_modules/angular/angular.js', './app/**.js', './app/controllers/**'])
+  return gulp.src(['node_modules/angular/angular.js', './app/**.js', './app/controllers/**', 'lib/**'])
   .pipe(webpack({
     output: {
       filename: 'bundle.js'

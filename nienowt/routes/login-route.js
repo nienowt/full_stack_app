@@ -34,10 +34,10 @@ module.exports  = (publicRouter) => {
         });
       });
     });
-  
+
   publicRouter.route('/login')
     .post((req, res) => {
-      var based = req.headers.authorization.split(' ')[1];
+      var based = req.headers.authorization.split(' ')[1];''
       var authArr = new Buffer(based, 'base64').toString().split(':');
       Ghost.findOne({name: authArr[0]}, (err, ghost) => {
 

@@ -14,7 +14,13 @@
     };
 
     this.getGhosts = function() {
-      $http.get(mainRoute)
+      $http({
+        method:'GET',
+        url: mainRoute,
+        headers: {
+          'Authorization': 'Token ' + Auth.getToken()
+        }
+      })
       .then((results) => {
         console.log(results);
         this.ghosts = results.data;
@@ -39,10 +45,28 @@
       Auth.login(ghost)
     }
 
+    // this.editGhost = function(ghost){
+    //   if (!this.editConfirmation) return this.editConfirmation = true;
+    //   $http.put(mainRoute + '/' + ghost._id, this.changedGhost)
+    //   .then(() => {
+    //     this.ghosts = this.ghosts.filter((g) => g._id != ghost._id);
+    //     this.ghosts.push(this.changedGhost.ghost);
+    //     this.editShow = 'new';
+    //   });
+    // };
     this.editGhost = function(ghost){
       if (!this.editConfirmation) return this.editConfirmation = true;
-      $http.put(mainRoute + '/' + ghost._id, this.changedGhost)
-      .then(() => {
+      console.log('auth get', Auth.getToken())
+      $http({
+        method: 'PUT',
+        url: mainRoute + '/' + ghost._id,
+        headers: {
+          'Authorization': 'Token ' + Auth.getToken()
+        },
+        data: this.changedGhost
+      })
+      .then((res) => {
+        console.log(res)
         this.ghosts = this.ghosts.filter((g) => g._id != ghost._id);
         this.ghosts.push(this.changedGhost.ghost);
         this.editShow = 'new';

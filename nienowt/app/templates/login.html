@@ -1,0 +1,21 @@
+
+<section>
+  <a href='' ng-click="tabctrl.setTab('login')">Login</a>
+  <a href='' ng-click="tabctrl.setTab('landing')">Sign Up</a>
+  <section ng-show="tabctrl.active('landing')">
+    Sign up!
+    <form name="newForm" data-ng-submit="ghostctrl.createGhost(ghostctrl.newGhost)" >
+      Name: <input type="text" data-ng-model="ghostctrl.newGhost.name" value=""/>
+      Password: <input type="text" data-ng-model="ghostctrl.newGhost.password">
+      <p>Primary Power: <input type="text" data-ng-model="ghostctrl.newGhost.powers.primary" value=""/></p>
+      <p>Secondary Power: <input type="text" data-ng-model="ghostctrl.newGhost.powers.secondary" value=""/></p>
+      <p>Weakness: <input type="text" data-ng-model="ghostctrl.newGhost.powers.weakness" value=""/></p>
+      <button id="ghost" ng-click="tabctrl.setTab('login')" type="submit">Submit</button>
+    </form>
+  </section>
+  <section ng-show="tabctrl.active('login')">
+    Name: <input type="text" ng-model="ghost.name" value="">
+    Password: <input type="password" ng-model="ghost.password" value="">
+    <button ng-click="ghostctrl.login(ghost); tabctrl.setTab('ghosts')">Login</button>
+  </section>
+</section>

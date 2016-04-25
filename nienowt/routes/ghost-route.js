@@ -3,11 +3,12 @@ let Ghost = require(__dirname + '/../models/ghost-model');
 let Powers = require(__dirname + '/../models/powers-model');
 
 module.exports = (router) => {
-  // let decode = require('../lib/auth');
+  let decode = require('../lib/auth');
 
-  // router.use(decode);
+  // router.use('/ghosts/:id',decode);
   // router.use('/ghosts/:id', (req, res, next) => {
   //   if (req.decodedToken.id !== req.params.id) {
+  //     console.log(decode)
   //     res.write('DENIED');
   //     return res.end();
   //   }
@@ -16,6 +17,7 @@ module.exports = (router) => {
 
   router.route('/ghosts')
     .get((req, res) => {
+      console.log(req.headers)
       Ghost.find({})
         .populate('powers')
         .populate('haunting')
@@ -37,6 +39,7 @@ module.exports = (router) => {
     });
   })
     .put((req, res) => {
+      console.log(req.headers)
       Ghost.findByIdAndUpdate(req.params.id,{ $set: req.body.ghost }, (err, ghost) => {
         if (err) {
           console.log('ghost error: ' + err);

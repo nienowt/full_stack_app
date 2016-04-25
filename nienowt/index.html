@@ -6,13 +6,9 @@
     <title></title>
   </head>
   <body data-ng-app='app' data-ng-controller="TabController as tabctrl" data-ng-cloak>
-    <header>
-      <nav>
-        <a href="" data-ng-click="tabctrl.setTab('ghosts')">Ghosts</a>
-        <a href="" id="humanTab" data-ng-click="tabctrl.setTab('humans')">Humans</a>
-      </nav>
-    </header>
-    <ghosts></ghosts>
+    <div data-ng-controller="GhostController as ghostctrl">
+      <login></login>
+      <ghosts></ghosts>
     <!-- <section data-ng-init="ghostctrl.getGhosts()" data-ng-controller='GhostController as ghostctrl' data-ng-show="tabctrl.active('ghosts')">
 
         <section data-ng-repeat="ghost in ghostctrl.ghosts">
@@ -77,6 +73,7 @@
         <button id="human" type="submit">Submit</button>
       </form>
     </section> -->
+  </div>
     <script src="./bundle.js"></script>
     <!-- <script src="./node_modules/angular/angular.js"></script>
     <script src="./controllers/ghosts/ghost-module.js"></script>
