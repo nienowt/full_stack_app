@@ -1,5 +1,5 @@
 module.exports = function(app){
-  app.factory('ResourceServ', ['$http','Auth', function($http, Auth){
+  app.factory('ResourceServ', ['$http','$window','Auth', function($http,$window, Auth){
     var mainRoute = 'http://localhost:3000/api/'
     function Resource(name){
       this.resource = name;
@@ -11,7 +11,7 @@ module.exports = function(app){
         method: method,
         url: mainRoute + this.resource + '/' + id,
         headers: {
-          'Authorization': 'Token ' + Auth.getToken()
+          'Authorization': 'Token ' + $window.sessionStorage.token || Auth.getToken()
         },
         data: data || null
       })
@@ -19,13 +19,6 @@ module.exports = function(app){
 
     Resource.prototype.getAll = function(){
       return this.call('GET')
-      // return $http({
-      //   method: 'GET',
-      //   url: mainRoute + this.resource,
-      //   headers: {
-      //     'Authorization': 'Token ' + Auth.getToken()
-      //   }
-      // })
     }
 
     Resource.prototype.create = function(resource){
