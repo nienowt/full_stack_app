@@ -1,7 +1,8 @@
 (function(){
   angular.module('ghost')
-  .controller('GhostController',['$http', 'Auth', function($http, Auth) {
+  .controller('GhostController',['$http', 'Auth','ResourceServ', function($http, Auth, ResourceServ) {
     const mainRoute = 'http://localhost:3000/api/ghosts';
+    var ghostResource = ResourceServ('ghosts')
     this.ghosts = ['ghost'];
     this.editShow = 'new';
     this.editConfirmation;
@@ -13,22 +14,21 @@
       this.editShow = name;
     };
 
-    this.getGhosts = function() {
-      $http({
-        method:'GET',
-        url: mainRoute,
-        headers: {
-          'Authorization': 'Token ' + Auth.getToken()
-        }
-      })
+    this.getGhosts = ghostResource.getAll()
+      // $http({
+      //   method:'GET',
+      //   url: mainRoute,
+      //   headers: {ResourceServ
+      //     'Authorization': 'Token ' + Auth.getToken()
+      //   }
+      // })
       .then((results) => {
-        console.log(results);
         this.ghosts = results.data;
         console.log(results.data);
       },(err) => {
         if (err) console.log(err);
       });
-    };
+
 
     // this.createGhost = function(ghost) {
     //   $http.post('http://localhost:3000/pub/new-ghost', ghost)
@@ -56,15 +56,16 @@
     // };
     this.editGhost = function(ghost){
       if (!this.editConfirmation) return this.editConfirmation = true;
-      console.log('auth get', Auth.getToken())
-      $http({
-        method: 'PUT',
-        url: mainRoute + '/' + ghost._id,
-        headers: {
-          'Authorization': 'Token ' + Auth.getToken()
-        },
-        data: this.changedGhost
-      })
+      ghostResource.edit(ghost, this.changedGhost)
+      // console.log('auth get', Auth.getToken())
+      // $http({
+      //   method: 'PUT',
+      //   url: mainRoute + '/' + ghost._id,
+      //   headers: {
+      //     'Authorization': 'Token ' + Auth.getToken()
+      //   },
+      //   data: this.changedGhost
+      // })
       .then((res) => {
         console.log(res)
         this.ghosts = this.ghosts.filter((g) => g._id != ghost._id);
@@ -75,7 +76,8 @@
 
     this.removeGhost = function(ghost){
       if (!this.editConfirmation) return this.editConfirmation = true;
-      $http.delete(mainRoute + '/' + ghost._id)
+      ghostResource.remove(ghost)
+      // $http.delete(mainRoute + '/' + ghost._id)
       .then(() => {
         this.ghosts = this.ghosts.filter((g) => g._id != ghost._id);
         this.editShow = 'new';

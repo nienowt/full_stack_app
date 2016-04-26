@@ -1,4 +1,4 @@
-<section data-ng-init="humanctrl.getHumans()" data-ng-controller='HumanController as humanctrl' data-ng-show="tabctrl.active('humans')">
+<section data-ng-init="humanctrl.getHumans" data-ng-controller='HumanController as humanctrl' data-ng-show="tabctrl.active('humans')">
     <resource-nav></resource-nav>
     <section data-ng-repeat="human in humanctrl.humans">
       <p>Name: {{human.name}}</p>

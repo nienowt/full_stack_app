@@ -1,11 +1,5 @@
-<section data-ng-init="ghostctrl.getGhosts()" data-ng-controller='GhostController as ghostctrl' ng-show="tabctrl.active('ghosts')">
+<section data-ng-init="ghostctrl.getGhosts" data-ng-controller='GhostController as ghostctrl' ng-show="tabctrl.active('ghosts')">
   <resource-nav></resource-nav>
-  <!-- <header>
-    <nav>
-      <a href="" data-ng-click="tabctrl.setTab('ghosts');ghostctrl.getGhosts() ">Ghosts</a>
-      <a href="" id="humanTab" data-ng-click="tabctrl.setTab('humans')">Humans</a>
-    </nav>
-  </header> -->
   <section data-ng-repeat="ghost in ghostctrl.ghosts" data-ng-show="tabctrl.active('ghosts')">
     <p>Name: {{ghost.name}}</p>
     <p>Powers:</p>
@@ -28,24 +22,4 @@
     </form>
 
   </section>
-
-
-  <!-- <section ng-show="tabctrl.active('landing')">
-    <a href='' ng-click="tabctrl.setTab('login')">Login</a>
-    Sign up!
-    <form name="newForm" data-ng-submit="ghostctrl.createGhost(ghostctrl.newGhost)" >
-      Name: <input type="text" data-ng-model="ghostctrl.newGhost.name" value=""/>
-      Password: <input type="text" data-ng-model="ghostctrl.newGhost.password">
-      <p>Primary Power: <input type="text" data-ng-model="ghostctrl.newGhost.powers.primary" value=""/></p>
-      <p>Secondary Power: <input type="text" data-ng-model="ghostctrl.newGhost.powers.secondary" value=""/></p>
-      <p>Weakness: <input type="text" data-ng-model="ghostctrl.newGhost.powers.weakness" value=""/></p>
-      <button id="ghost" ng-click="tabctrl.setTab('login')" type="submit">Submit</button>
-    </form>
-  </section> -->
-
-  <!-- <section ng-show="tabctrl.active('login')">
-    Name: <input type="text" ng-model="ghost.name" value="">
-    Password: <input type="password" ng-model="ghost.password" value="">
-    <button ng-click="ghostctrl.login(ghost); tabctrl.setTab('ghosts')">Login</button>
-  </section> -->
 </section>

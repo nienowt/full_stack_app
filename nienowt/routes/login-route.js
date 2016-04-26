@@ -40,8 +40,8 @@ module.exports  = (publicRouter) => {
       var based = req.headers.authorization.split(' ')[1];''
       var authArr = new Buffer(based, 'base64').toString().split(':');
       Ghost.findOne({name: authArr[0]}, (err, ghost) => {
-
-        if (err) console.log(err);
+        if(!ghost) return;
+        if (err) return console.log(err);
         var valid = ghost.compareHash(authArr[1]);
         if (!valid) {
           res.write('Invalid credentials');

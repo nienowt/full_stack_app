@@ -7,7 +7,8 @@ var webpack = require('webpack-stream');
 var paths = ['app/**','*.js', 'routes/*.js','lib/**', 'models/*.js', 'app/controllers/*', '*.html','css/*'];
 var sources = {
   js: ['./app/**.js', './app/controllers/**'],
-  test: './test/*_spec.js'
+  test: './test/*_spec.js',
+  wp: ['node_modules/angular/angular.js', './app/**.js', './app/controllers/**','./app/directives/**', 'lib/**', './app/services/**']
 }
 
 gulp.task('default', ['watch']);
@@ -92,7 +93,7 @@ gulp.task('bundle:test', () => {
 })
 
 gulp.task('webpack', function() {
-  return gulp.src(['node_modules/angular/angular.js', './app/**.js', './app/controllers/**', 'lib/**'])
+  return gulp.src(sources.wp)
   .pipe(webpack({
     output: {
       filename: 'bundle.js'
