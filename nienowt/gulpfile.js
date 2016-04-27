@@ -8,8 +8,9 @@ var paths = ['app/**','*.js', 'routes/*.js','lib/**', 'models/*.js', 'app/contro
 var sources = {
   js: ['./app/**.js', './app/controllers/**'],
   test: './test/*_spec.js',
-  wp: ['node_modules/angular/angular.js', './app/**.js', './app/controllers/**','./app/directives/**', 'lib/**', './app/services/**']
+  wp: ['./app/**.js', './app/controllers/**','./app/directives/**', 'lib/**', './app/services/**']
 }
+// wp: ['node_modules/angular/angular.js','node_modules/angular-route/angular-route.js', './app/**.js', './app/controllers/**','./app/directives/**', 'lib/**', './app/services/**']
 
 gulp.task('default', ['watch']);
 

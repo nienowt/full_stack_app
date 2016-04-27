@@ -16,6 +16,6 @@
   <section ng-show="tabctrl.active('login')">
     Name: <input type="text" ng-model="ghost.name" value="">
     Password: <input type="password" ng-model="ghost.password" value="">
-    <button ng-click="ghostctrl.login(ghost); tabctrl.setTab('ghosts')">Login</button>
+    <a href="#/ghosts"><button ng-click="ghostctrl.login(ghost); tabctrl.setTab('ghosts')">Login</button></a>
   </section>
 </section>
