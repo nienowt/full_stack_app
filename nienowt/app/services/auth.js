@@ -1,5 +1,5 @@
 module.exports = function(app){
-  app.factory('Auth', ['$http','$window', function($http, $window){
+  app.factory('Auth', ['$http','$window','$location', function($http, $window, $location){
     var token;
     var auth = {
       createGhost: function(ghost){
@@ -8,19 +8,27 @@ module.exports = function(app){
           console.log(res)
         })
       },
-      login: function(ghost){
+      login: function(ghost, cb){
+        cb || function(){};
         $http({
-          method:'POST',
+          method:'GET',
           url: 'http://localhost:3000/pub/login',
           headers: {
             'Authorization': 'Basic ' + btoa((ghost.name + ':' + ghost.password))
           }
-        }).then(function(res) {
-          token = $window.sessionStorage.token = res.data.token;
-          console.log(token)
-          console.log('sesh', $window.sessionStorage.token)
+        }).then((res) => {
+          console.log('made it to .then(res)')
+          token = $window.localStorage.token = res.data.token;
+          cb(null, res)
+        }, (err) => {
+          console.log('made it to error')
+          cb(err)
         })
       },
+      logout(cb){
+      token = $window.localStorage.token = null;
+      cb && cb()
+    },
       getToken: function(){
         console.log(token)
         return token

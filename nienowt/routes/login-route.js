@@ -36,16 +36,17 @@ module.exports  = (publicRouter) => {
     });
 
   publicRouter.route('/login')
-    .post((req, res) => {
+    .get((req, res) => {
       var based = req.headers.authorization.split(' ')[1];''
       var authArr = new Buffer(based, 'base64').toString().split(':');
       Ghost.findOne({name: authArr[0]}, (err, ghost) => {
-        if(!ghost) return;
-        if (err) return console.log(err);
+        if (err || !ghost) {
+          console.log(err);
+          return res.status(401).json({msg:'Error'});
+        }
         var valid = ghost.compareHash(authArr[1]);
         if (!valid) {
-          res.write('Invalid credentials');
-          return res.end();
+          return res.status(401).json({msg:'Invalid credentials'});;
         } else {
           res.json({token: ghost.genToken()});
           res.end();

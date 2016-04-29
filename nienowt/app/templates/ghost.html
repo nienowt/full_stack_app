@@ -1,6 +1,6 @@
-<section data-ng-init="ghostctrl.getGhosts" data-ng-controller='GhostController as ghostctrl' ng-show="tabctrl.active('ghosts')">
+<section data-ng-init="ghostctrl.getGhosts" data-ng-controller='GhostController as ghostctrl'>
   <resource-nav></resource-nav>
-  <section data-ng-repeat="ghost in ghostctrl.ghosts" data-ng-show="tabctrl.active('ghosts')">
+  <section data-ng-repeat="ghost in ghostctrl.ghosts">
     <p>Name: {{ghost.name}}</p>
     <p>Powers:</p>
     <p>Primary: {{ghost.powers[0].primary}}</p>

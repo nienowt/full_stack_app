@@ -13,8 +13,8 @@ let publicRouter = express.Router();
 app.use(bodyParser.json());
 app.use((req,res,next) => {
   res.header('Access-Control-Allow-Origin','http://127.0.0.1:8080' && 'http://localhost:8080');
-  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, token');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
   next();
 });
 

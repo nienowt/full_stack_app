@@ -11,7 +11,7 @@ module.exports = function(app){
         method: method,
         url: mainRoute + this.resource + '/' + id,
         headers: {
-          'Authorization': 'Token ' + $window.sessionStorage.token || Auth.getToken()
+          'token': $window.localStorage.token || Auth.getToken()
         },
         data: data || null
       })
