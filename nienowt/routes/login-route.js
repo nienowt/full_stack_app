@@ -48,7 +48,7 @@ module.exports  = (publicRouter) => {
         if (!valid) {
           return res.status(401).json({msg:'Invalid credentials'});;
         } else {
-          res.json({token: ghost.genToken()});
+          res.json({token: ghost.genToken(), id:ghost._id});
           res.end();
         }
       });

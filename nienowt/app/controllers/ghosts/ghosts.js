@@ -4,6 +4,7 @@
     var ghostResource = ResourceServ('ghosts')
     this.ghosts = ['ghost'];
     this.editShow = 'new';
+    this.user = Auth.getUser()
     this.error = ErrorService();
     this.editConfirmation;
     this.newGhost = {};
@@ -33,22 +34,43 @@
         console.log('err res',err, res)
         if(err) return this.error = ErrorService('Incorrect Username and/or Password')
         $location.path('/ghosts')
-        this.error = 'null'
+        this.error = null
       })
+    }
+
+    this.logout = function(){
+      Auth.logout()
+    }
+
+    this.getUser = function(ghost){
+      Auth.getUser()
+      console.log(ghost._id)
     }
 
     this.editGhost = function(ghost){
       if (!this.editConfirmation) return this.editConfirmation = true;
+      if(!this.changedGhost.ghost) this.changedGhost.ghost = {name: ghost.name}
       ghostResource.edit(ghost, this.changedGhost)
       .then((res) => {
         console.log(res.data)
         if(res.data == 'DENIED') {
           this.editShow = 'new'
-          this.changedGhost = {}
-          return
+          return this.changedGhost = {}
         }
-        this.ghosts = this.ghosts.filter((g) => g._id != ghost._id);
-        this.ghosts.push(this.changedGhost.ghost);
+        this.ghosts.forEach((g) => {
+          if (g._id == ghost._id){
+            g.name = this.changedGhost.ghost.name
+            if (this.changedGhost.powers){
+              g.powers[0].primary = this.changedGhost.powers.primary || g.powers[0].primary
+              g.powers[0].secondary = this.changedGhost.powers.secondary || g.powers[0].secondary
+              g.powers[0].weakness = this.changedGhost.powers.weakness || g.powers[0].weakness
+              console.log(g)
+            }
+          }
+        })
+        console.log(this.ghosts)
+        this.changedGhost = {}
+        this.reset();
         this.editShow = 'new';
       });
     };
