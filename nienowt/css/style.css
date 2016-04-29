@@ -1,3 +1,9 @@
 [data-ng-cloak] {
   display: none !important;
 }
+
+#ghost-list {
+  border:solid black 1px;
+  margin: 2%;
+  padding: 1%;
+}

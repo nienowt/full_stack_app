@@ -1,0 +1,27 @@
+<section data-ng-init="humanctrl.getHumans" data-ng-controller='HumanController as humanctrl'>
+    <resource-nav></resource-nav>
+    <section data-ng-repeat="human in humanctrl.humans">
+      <p>Name: {{human.name}}</p>
+      <p>Number of Teeth: {{human.numTeeth}}</p>
+        <button id="humanEdit" data-ng-click="humanctrl.toggle(human.name)">Edit</button>
+
+        <form name="editForm" ng-show="humanctrl.editShow == human.name">
+          Name: <input type="text" data-ng-model="humanctrl.changedHuman.name" value=""/>
+          <p>Number of Teeth: <input type="text" data-ng-model="humanctrl.changedHuman.numTeeth" value=""/></p>
+
+          <button id="humanEditSubmit" data-ng-click="humanctrl.editHuman(human)">Submit</button>
+          <p data-ng-show="humanctrl.editConfirmation">Are you sure you want to do that? Changes cannot be undone once submitted</p>
+
+          <button data-ng-click="humanctrl.reset(human)" data-ng-show="humanctrl.editConfirmation">Cancel Edit</button>
+          <button data-ng-click="humanctrl.removeHuman(human)">Delete Human</button>
+        </form>
+
+    </section>
+
+  <form name="humanForm" data-ng-submit="humanctrl.createHuman(humanctrl.newHuman)" ng-show="humanctrl.editShow == 'new'">
+    <p>New Human:</p>
+    Name: <input type="text" data-ng-model="humanctrl.newHuman.name" value=""/>
+    <p>Number of Teeth: <input type="text" data-ng-model="humanctrl.newHuman.numTeeth" value=""/></p>
+    <button id="human" type="submit">Submit</button>
+  </form>
+</section>

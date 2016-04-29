@@ -1,0 +1,25 @@
+<section id="ghost-list" data-ng-init="ghostctrl.getGhosts" data-ng-controller='GhostController as ghostctrl'>
+  <resource-nav></resource-nav>
+  <section id="ghost-list" data-ng-repeat="ghost in ghostctrl.ghosts">
+    <p>Name: {{ghost.name}}</p>
+    <p>Powers:</p>
+    <p>Primary: {{ghost.powers[0].primary}}</p>
+    <p>Secondary: {{ghost.powers[0].secondary}}</p>
+    <p>Weakness: {{ghost.powers[0].weakness}}</p>
+    <button id="ghostEdit" ng-show="ghostctrl.user == ghost._id" data-ng-click="ghostctrl.toggle(ghost.name)">Edit</button>
+
+    <form name="editForm" ng-show="ghostctrl.editShow == ghost.name">
+      Name: <input type="text" data-ng-model="ghostctrl.changedGhost.ghost.name" value=""/>
+      <p>Primary Power: <input type="text" data-ng-model="ghostctrl.changedGhost.powers.primary" value=""/></p>
+      <p>Secondary Power: <input type="text" data-ng-model="ghostctrl.changedGhost.powers.secondary" value=""/></p>
+      <p>Weakness: <input type="text" data-ng-model="ghostctrl.changedGhost.powers.weakness" value=""></p>
+
+      <button id="ghostEditSubmit" data-ng-click="ghostctrl.editGhost(ghost)">Submit</button>
+      <p data-ng-show="ghostctrl.editConfirmation">Are you sure you want to do that? Changes cannot be undone once submitted</p>
+
+      <button form="editForm" data-ng-click="ghostctrl.reset(ghost)" data-ng-show="ghostctrl.editConfirmation">Cancel Edit</button>
+      <button data-ng-click="ghostctrl.removeGhost(ghost)">Delete Ghost</button>
+    </form>
+
+  </section>
+</section>

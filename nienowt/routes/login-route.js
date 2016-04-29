@@ -15,6 +15,7 @@ module.exports  = (publicRouter) => {
         var newGhost = new Ghost({
           // name: authArr[0],
           name: req.body.name,
+          password:req.body.password,
           isEvil: req.body.isEvil,
           numEyes: req.body.numEyes,
           powers: newPowers._id
@@ -34,21 +35,22 @@ module.exports  = (publicRouter) => {
       });
     });
 
-  // publicRouter.route('/login')
-  //   .post((req, res) => {
-  //     var based = req.headers.authorization.split(' ')[1];
-  //     var authArr = new Buffer(based, 'base64').toString().split(':');
-  //     Ghost.findOne({name: authArr[0]}, (err, ghost) => {
-  //
-  //       if (err) console.log(err);
-  //       var valid = ghost.compareHash(authArr[1]);
-  //       if (!valid) {
-  //         res.write('Invalid credentials');
-  //         return res.end();
-  //       } else {
-  //         res.json({token: ghost.genToken()});
-  //         res.end();
-  //       }
-  //     });
-  //   });
+  publicRouter.route('/login')
+    .get((req, res) => {
+      var based = req.headers.authorization.split(' ')[1];''
+      var authArr = new Buffer(based, 'base64').toString().split(':');
+      Ghost.findOne({name: authArr[0]}, (err, ghost) => {
+        if (err || !ghost) {
+          console.log(err);
+          return res.status(401).json({msg:'Error'});
+        }
+        var valid = ghost.compareHash(authArr[1]);
+        if (!valid) {
+          return res.status(401).json({msg:'Invalid credentials'});;
+        } else {
+          res.json({token: ghost.genToken(), id:ghost._id});
+          res.end();
+        }
+      });
+    });
 };

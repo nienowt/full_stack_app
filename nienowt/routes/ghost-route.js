@@ -1,21 +1,23 @@
 'use strict';
 let Ghost = require(__dirname + '/../models/ghost-model');
 let Powers = require(__dirname + '/../models/powers-model');
+let decode = require(__dirname +'/../lib/auth');
 
-module.exports = (router) => {
-  // let decode = require('../lib/auth');
+module.exports = exports = (router) => {
 
   // router.use(decode);
-  // router.use('/ghosts/:id', (req, res, next) => {
-  //   if (req.decodedToken.id !== req.params.id) {
-  //     res.write('DENIED');
-  //     return res.end();
-  //   }
-  //   next();
-  // });
+  function userCheck (req, res, next) {
+    if (req.headers.decodedToken.id !== req.params.id) {
+      console.log(decode)
+      res.write('DENIED');
+      return res.end();
+    }
+    next();
+  };
 
   router.route('/ghosts')
-    .get((req, res) => {
+    .get(decode,(req, res) => {
+      console.log(req.headers)
       Ghost.find({})
         .populate('powers')
         .populate('haunting')
@@ -26,7 +28,7 @@ module.exports = (router) => {
     });
 
   router.route('/ghosts/:id')
-  .get((req, res) => {
+  .get(decode, userCheck,(req, res) => {
     Ghost
     .findOne({_id: req.params.id})
     .populate('powers')
@@ -36,7 +38,8 @@ module.exports = (router) => {
       res.end();
     });
   })
-    .put((req, res) => {
+    .put(decode, userCheck,(req, res) => {
+      console.log(req.headers)
       Ghost.findByIdAndUpdate(req.params.id,{ $set: req.body.ghost }, (err, ghost) => {
         if (err) {
           console.log('ghost error: ' + err);
@@ -54,7 +57,7 @@ module.exports = (router) => {
         res.end();
       });
     })
-      .delete((req, res) => {
+      .delete(decode, userCheck,(req, res) => {
         Ghost.findById(req.params.id, (err, ghost) => {
           Powers.findById(ghost.powers, (err, power) =>{
             if (err) res.send('oh no');

@@ -3,13 +3,19 @@
 var gulp = require('gulp');
 var eslint = require('gulp-eslint');
 var mocha = require('gulp-mocha');
-var webpack = require('gulp-webpack');
-var paths = ['*.js', 'test/*.js', 'routes/*.js', 'models/*.js', 'controllers/*', '*.html','css/*'];
+var webpack = require('webpack-stream');
+var paths = ['app/**','*.js', 'routes/*.js','lib/**', 'models/*.js', 'app/controllers/*', '*.html','css/*'];
+var sources = {
+  js: ['./app/**.js', './app/controllers/**'],
+  test: './test/*_spec.js',
+  wp: ['./app/**.js', './app/controllers/**','./app/directives/**', 'lib/**', './app/services/**']
+}
+// wp: ['node_modules/angular/angular.js','node_modules/angular-route/angular-route.js', './app/**.js', './app/controllers/**','./app/directives/**', 'lib/**', './app/services/**']
 
 gulp.task('default', ['watch']);
 
 gulp.task('watch', function() {
-  gulp.watch(paths,['webpack', 'build', 'buildcss']);
+  gulp.watch(paths,['build','buildtemplates', 'buildcss','webpack']);
 });
 
 gulp.task('lint', function(){
@@ -71,8 +77,24 @@ gulp.task('buildcss', function(){
   .pipe(gulp.dest('./build/css'));
 });
 
+gulp.task('buildtemplates', function(){
+  return gulp.src(['app/templates/**'])
+  .pipe(gulp.dest('./build/templates'))
+})
+
+
+// gulp.task('buildmodules', function(){
+//   return gulp.src(['node_modules/angular/angular.js'])
+//   .pipe(gulp.dest('./build/node_modules/angular'));
+// });
+gulp.task('bundle:test', () => {
+  return gulp.src(sources.test)
+  .pipe(webpack({output: {filename: 'test_bundle.js'}}))
+  .pipe(gulp.dest('./test'));
+})
+
 gulp.task('webpack', function() {
-  return gulp.src('./entry.js')
+  return gulp.src(sources.wp)
   .pipe(webpack({
     output: {
       filename: 'bundle.js'
